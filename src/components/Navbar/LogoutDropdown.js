@@ -3,35 +3,35 @@ import React, { Component } from 'react';
 
 export default class LogoutDropdown extends Component {
   static contextTypes = {
-    router: PropTypes.object.isRequired
-  }
+    router: PropTypes.object.isRequired,
+  };
 
-  logout () {
+  logout() {
     // 退出登录后直接返回首页
-    this.props.logout()
-    this.context.router.replace('/')
+    this.props.logout();
+    this.context.router.replace('/');
   }
 
-  render () {
+  render() {
     return (
       <ul className="nav navbar-nav navbar-right">
         <li className="dropdown">
-          <a href="javascript:;"
+          <a
+            href="javascript:;"
             className="dropdown-toggle"
-            data-toggle="dropdown">
-            欢迎您，{ this.props.userData.username }
-            <strong className="caret"></strong>
+            data-toggle="dropdown"
+          >
+            欢迎您，{this.props.userData.username}
+            <strong className="caret" />
           </a>
-          
+
           <ul className="dropdown-menu">
             <li onClick={() => this.logout()}>
-              <a href="javascript:;">
-                注销登录
-              </a>
+              <a href="javascript:;">注销登录</a>
             </li>
           </ul>
         </li>
       </ul>
-    )
+    );
   }
 }

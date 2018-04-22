@@ -15,7 +15,7 @@ var commonPath = {
 module.exports = {
   commonPath: commonPath,
   entry: {
-    app: path.join(src, 'app.js'),
+    app: path.join(src, 'index.js'),
 
     // ================================
     // 框架 / 类库 分离打包
@@ -75,7 +75,7 @@ module.exports = {
                   },
                 },
               }),
-            'eslint',
+            // 'eslint',
           ];
 
           // 开发环境下引入 React Hot Loader
