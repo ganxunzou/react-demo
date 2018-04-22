@@ -1,4 +1,5 @@
-import React, { Component, PropTypes } from 'react'
+import PropTypes from 'prop-types';
+import React, { Component } from 'react';
 import { Link } from 'react-router'
 
 /* 本组件全称 Operation Button Group，操作按钮组 */
