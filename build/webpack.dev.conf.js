@@ -16,22 +16,26 @@ config.entry.app = [
   'eventsource-polyfill',
   'webpack-hot-middleware/client?reload=true',
   'webpack/hot/only-dev-server',
-  config.entry.app
+  config.entry.app,
 ];
 
 config.output.publicPath = '/';
 
 // 开发环境下直接内嵌 CSS 以支持热替换
-config.module.loaders.push({
-  test: /\.css$/,
-  loader: 'style!css'
-}, {
-  test: /\.less$/,
-  loader: 'style!css!less'
-}, {
-  test: /\.scss$/,
-  loader: 'style!css!sass'
-});
+config.module.loaders.push(
+  {
+    test: /\.css$/,
+    loader: 'style!css',
+  },
+  {
+    test: /\.less$/,
+    loader: 'style!css!less',
+  },
+  {
+    test: /\.scss$/,
+    loader: 'style!css!sass',
+  },
+);
 
 config.plugins.push(
   new webpack.optimize.OccurenceOrderPlugin(),
@@ -40,18 +44,23 @@ config.plugins.push(
   new ExtractTextPlugin('[name].css'),
   new HtmlWebpackPlugin({
     filename: 'index.html',
-    template: config.commonPath.indexHTML,
-    chunksSortMode: 'none'
+    template: 'src/index.html',
+    title: 'react-boilerplate-dev',
+    // chunks: ['App', 'vendor'], // 指定要加入的entry实例,
+    inject: 'body',
   }),
-  new BrowserSyncPlugin({
-    host: '127.0.0.1',
-    port: 9090,
-    proxy: 'http://127.0.0.1:9000/',
-    logConnections: false,
-    notify: false
-  }, {
-    reload: false
-  })
+  new BrowserSyncPlugin(
+    {
+      host: '127.0.0.1',
+      port: 9090,
+      proxy: 'http://127.0.0.1:9000/',
+      logConnections: false,
+      notify: false,
+    },
+    {
+      reload: false,
+    },
+  ),
 );
 
 module.exports = config;

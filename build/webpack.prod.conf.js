@@ -12,52 +12,57 @@ config.output.chunkFilename = '[id].[chunkhash:6].js';
 config.devtool = SOURCE_MAP ? 'source-map' : false;
 
 // 生产环境下分离出 CSS 文件
-config.module.loaders.push({
-  test: /\.css$/,
-  loader: ExtractTextPlugin.extract('style', 'css')
-}, {
-  test: /\.less$/,
-  loader: ExtractTextPlugin.extract('style', 'css!less')
-}, {
-  test: /\.scss$/,
-  loader: ExtractTextPlugin.extract('style', 'css!sass')
-});
+config.module.loaders.push(
+  {
+    test: /\.css$/,
+    loader: ExtractTextPlugin.extract('style', 'css'),
+  },
+  {
+    test: /\.less$/,
+    loader: ExtractTextPlugin.extract('style', 'css!less'),
+  },
+  {
+    test: /\.scss$/,
+    loader: ExtractTextPlugin.extract('style', 'css!sass'),
+  },
+);
 
 config.plugins.push(
   new CleanWebpackPlugin('dist', {
     root: config.commonPath.rootPath,
-    verbose: false
+    verbose: false,
   }),
-  new CopyWebpackPlugin([ // 复制高度静态资源
+  new CopyWebpackPlugin([
+    // 复制高度静态资源
     {
       context: config.commonPath.staticDir,
       from: '**/*',
-      ignore: ['*.md']
-    }
+      ignore: ['*.md'],
+    },
   ]),
   new webpack.optimize.DedupePlugin(),
   new webpack.optimize.UglifyJsPlugin({
     compress: {
-      warnings: false
-    }
+      warnings: false,
+    },
   }),
   new webpack.optimize.OccurenceOrderPlugin(),
   new webpack.optimize.CommonsChunkPlugin({
     // 公共代码分离打包
-    names: ['vendor', 'mainifest']
+    names: ['vendor', 'mainifest'],
   }),
   new webpack.optimize.AggressiveMergingPlugin(),
   new webpack.optimize.MinChunkSizePlugin({
-    minChunkSize: 30000
+    minChunkSize: 30000,
   }),
   new ExtractTextPlugin('[name].[contenthash:6].css', {
-    allChunks : true // 若要按需加载 CSS 则请注释掉该行
+    allChunks: true, // 若要按需加载 CSS 则请注释掉该行
   }),
   new HtmlWebpackPlugin({
     filename: '../index.html',
     template: config.commonPath.indexHTML,
-    chunksSortMode: 'none'
-  })
+    chunksSortMode: 'none',
+  }),
 );
 
 module.exports = config;
