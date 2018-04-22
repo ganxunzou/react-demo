@@ -3,13 +3,13 @@ var webpack = require('webpack'),
   HtmlWebpackPlugin = require('html-webpack-plugin'),
   ExtractTextPlugin = require('extract-text-webpack-plugin'),
   BrowserSyncPlugin = require('browser-sync-webpack-plugin'),
-  // SOURCE_MAP = true; // 大多数情况下用不到
-  SOURCE_MAP = false;
+  SOURCE_MAP = true; // 大多数情况下用不到
+// SOURCE_MAP = false;
 
 config.output.filename = '[name].js';
 config.output.chunkFilename = '[id].js';
 
-config.devtool = SOURCE_MAP ? 'eval-source-map' : false;
+config.devtool = SOURCE_MAP ? 'cheap-source-map' : false;
 
 // add hot-reload related code to entry chunk
 config.entry.app = [

@@ -37,7 +37,10 @@ React-PropTypes-to-prop-types.js
  `react-redux@5.0.6` 版本以上
 
 ## react-router 升级
-  `react-router@3.2.0` 版本以上
+  `react-router@3.2.0` 版本以上（不超过4.0.0）
+
+## history 升级
+  `history@3.0.0` 版本以上（不超过4.0.0）
 
 
 # 升级webpack
