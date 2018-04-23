@@ -6,8 +6,15 @@ var express = require('express'),
 
 var compiler = webpack(config);
 
+// var commonPath = {
+//   rootPath: rootPath,
+//   dist: path.join(rootPath, 'dist'), // build 后输出目录
+//   indexHTML: path.join(src, 'index.html'), // 入口基页
+//   staticDir: path.join(rootPath, 'static'), // 无需处理的静态资源目录
+// };
 // for highly stable resources
-app.use('/static', express.static(config.commonPath.staticDir));
+app.use('/static', express.static('static'));
+// app.use('/static', express.static('/dist/static/'));
 
 // app.use(favicon(path.join(__dirname, '../favicon.ico')));
 

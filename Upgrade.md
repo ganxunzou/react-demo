@@ -44,3 +44,51 @@ React-PropTypes-to-prop-types.js
 
 
 # 升级webpack
+"webpack": "^4.6.0",
+"webpack-dev-middleware": "^3.1.2",
+"webpack-hot-middleware": "^2.22.1",
+
+## remove "extract-text-webpack-plugin"
+```
+Error: Cannot find module 'webpack/lib/ConcatSource'
+```
+
+## webpack.optimize.OccurenceOrderPlugin
+OccurenceOrderPlugin has been renamed to OccurrenceOrderPlugin
+
+## remove NoErrorsPlugin
+
+## add mode 
+
+## module.loaders 变成 module.rules
+
+```JS
+module: {
+    loaders: [
+      {
+        test: /\.css$/,
+        loader: 'style!css',
+      },
+    ]
+}
+
+// change
+// 注意新版本的loader不能省略，即：style-loader 不能写成 style
+module: {
+    rules: [
+      {
+        test: /\.css$/,
+        use: [
+          {loader: "style-loader"]},
+          {loader: "css-loader"]},
+        ]
+      },
+    ]
+}
+```
+
+## webpack-cli
+
+## html-webpack-plugin
+
+## babel-loader

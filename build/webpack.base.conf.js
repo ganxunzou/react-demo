@@ -13,7 +13,7 @@ var commonPath = {
 };
 
 module.exports = {
-  commonPath: commonPath,
+  // commonPath: commonPath,
   entry: {
     app: path.join(src, 'app.js'),
 
@@ -37,7 +37,7 @@ module.exports = {
     publicPath: '/static/',
   },
   resolve: {
-    extensions: ['', '.js', '.jsx'],
+    extensions: ['*', '.js', '.jsx'],
     alias: {
       // ================================
       // 自定义路径别名
@@ -56,15 +56,15 @@ module.exports = {
     },
   },
   resolveLoader: {
-    root: path.join(rootPath, 'node_modules'),
+    // root: path.join(rootPath, 'node_modules'),
   },
   module: {
-    loaders: [
+    rules: [
       {
         test: /\.(js|jsx)$/,
         loaders: (function() {
           var _loaders = [
-            'babel?' +
+            'babel-loader?' +
               JSON.stringify({
                 cacheDirectory: true,
                 plugins: ['transform-runtime', 'transform-decorators-legacy'],
@@ -89,15 +89,15 @@ module.exports = {
       },
       {
         test: /\.json$/,
-        loader: 'json',
+        loader: 'json-loader',
       },
       {
         test: /\.html$/,
-        loader: 'html',
+        loader: 'html-loader',
       },
       {
         test: /\.(png|jpe?g|gif|svg)$/,
-        loader: 'url',
+        loader: 'url-loader',
         query: {
           limit: 10240, // 10KB 以下使用 base64
           name: 'img/[name]-[hash:6].[ext]',
@@ -109,9 +109,9 @@ module.exports = {
       },
     ],
   },
-  eslint: {
-    formatter: require('eslint-friendly-formatter'),
-  },
+  // eslint: {
+  //   formatter: require('eslint-friendly-formatter'),
+  // },
   plugins: [
     new NyanProgressPlugin(), // 进度条
     new webpack.DefinePlugin({
