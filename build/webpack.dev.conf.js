@@ -8,7 +8,7 @@ var webpack = require('webpack'),
 
 config.mode = 'development';
 config.output.filename = '[name].js';
-config.output.chunkFilename = '[id].js';
+config.output.chunkFilename = '[name].js';
 
 config.devtool = SOURCE_MAP ? 'cheap-source-map' : false;
 
@@ -22,32 +22,18 @@ config.entry.app = [
 
 config.output.publicPath = '/';
 
-// 开发环境下直接内嵌 CSS 以支持热替换
-config.module.rules.push(
-  {
-    test: /\.css$/,
-    use: [
-      {loader: 'style-loader'},
-      {loader: 'css-loader'}
-    ]
+// 开发环境 eslint 缓存提高开发效率
+config.module.rules.push({
+  enforce: 'pre',
+  test: /\.(js|jsx)$/,
+  exclude: /node_modules/,
+  loader: 'eslint-loader',
+  options: {
+    fix: true,
+    cache: true,
+    formatter: require('eslint-friendly-formatter'),
   },
-  {
-    test: /\.less$/,
-    use: [
-      {loader: 'style-loader'},
-      {loader: 'css-loader'},
-      {loader: 'less-loader'}
-    ]
-  },
-  {
-    test: /\.scss$/,
-    use: [
-      {loader: 'style-loader'},
-      {loader: 'css-loader'},
-      {loader: 'sass-loader'}
-    ]
-  },
-);
+});
 
 config.plugins.push(
   new webpack.optimize.OccurrenceOrderPlugin(),

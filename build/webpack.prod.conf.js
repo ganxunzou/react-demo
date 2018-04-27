@@ -3,12 +3,12 @@ var webpack = require('webpack'),
   HtmlWebpackPlugin = require('html-webpack-plugin'),
   CopyWebpackPlugin = require('copy-webpack-plugin'),
   CleanWebpackPlugin = require('clean-webpack-plugin'),
-  path = require('path')
+  path = require('path'),
   // ExtractTextPlugin = require('extract-text-webpack-plugin'),
   SOURCE_MAP = false;
 
 var rootPath = path.resolve(__dirname, '..'), // 项目根目录
-src = path.join(rootPath, 'src');// 开发源码目录
+  src = path.join(rootPath, 'src'); // 开发源码目录
 var commonPath = {
   rootPath: rootPath,
   dist: path.join(rootPath, 'dist'), // build 后输出目录
@@ -18,62 +18,48 @@ var commonPath = {
 
 config.mode = 'production';
 config.output.filename = '[name].[chunkhash:6].js';
-config.output.chunkFilename = '[id].[chunkhash:6].js';
+config.output.chunkFilename = '[name].[chunkhash:6].js';
 
 config.devtool = SOURCE_MAP ? 'source-map' : false;
 
 // 生产环境下分离出 CSS 文件
-config.module.rules.push(
-  {
-    test: /\.css$/,
-    use: [
-      {loader: 'style-loader'},
-      {loader: 'css-loader'}
-    ]
-  },
-  {
-    test: /\.less$/,
-    loader: [
-      {loader: 'style-loader'},
-      {loader: 'css-loader'},
-      {loader: 'less-loader'}
-    ]
-  },
-  {
-    test: /\.scss$/,
-    loader: [
-      {loader: 'style-loader'},
-      {loader: 'css-loader'},
-      {loader: 'sass-loader'}
-    ]
-  },
-);
+config.module.rules.push({
+  enforce: 'pre',
+  test: /\.(js|jsx)$/,
+  exclude: /node_modules/,
+  loader: 'eslint-loader',
+  // options: {
+  //   fix: true,
+  //   cache: true,
+  //   formatter: require('eslint-friendly-formatter'),
+  // },
+});
 
 // webpack4 new attribute
 config.optimization = {
   minimize: true,
-  runtimeChunk: 'single',
+  // runtimeChunk: 'single',
   splitChunks: {
-      chunks: "all",
-      minSize: 200 * 1024, // 200K 
-      minChunks: 2,
-      maxAsyncRequests: 5,
-      maxInitialRequests: 3,
-      name: true,
-      cacheGroups: {
-          default: {
-              minChunks: 1,
-              priority: -20,
-              reuseExistingChunk: true,
-          },
-          vendors: {
-              name: "vendors",
-              test: /[\\/]node_modules[\\/]/,
-              priority: -10
-          }
-      }
-  }
-}
+    chunks: 'all',
+    minSize: 200 * 1024, // 200K
+    minChunks: 2,
+    maxAsyncRequests: 5,
+    maxInitialRequests: 3,
+    name: true,
+    cacheGroups: {
+      default: {
+        minChunks: 1,
+        priority: -20,
+        reuseExistingChunk: true,
+      },
+      vendors: {
+        name: 'vendors',
+        test: /[\\/]node_modules[\\/]/,
+        priority: -10,
+      },
+    },
+  },
+};
 
 config.plugins.push(
   new CleanWebpackPlugin('dist', {

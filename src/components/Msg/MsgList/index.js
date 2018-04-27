@@ -5,7 +5,11 @@ import NoticeBar from './NoticeBar';
 import DisplayControl from './DisplayControl';
 import OptBtnGroup from 'COMPONENT/Msg/OptBtnGroup';
 import dateTimeFormatter from 'UTIL/dateTimeFormatter';
-
+import {connect} from 'react-redux';
+@connect(
+  ({ userData, msg }) => ({ userData, msg }), // mapStateToProps
+  require('ACTION/msg').default
+)     
 export default class MsgList extends Component {
   componentWillMount() {
     let { author } = this.props.location.query;

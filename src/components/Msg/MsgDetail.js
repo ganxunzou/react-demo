@@ -4,7 +4,11 @@ import { Link } from 'react-router'
 import OptBtnGroup from 'COMPONENT/Msg/OptBtnGroup'
 import dateTimeFormatter from 'UTIL/dateTimeFormatter'
 import msgService from 'SERVICE/msgService'
-
+import {connect} from 'react-redux'
+@connect(
+  ({ userData, msg }) => ({ userData, msg }), // mapStateToProps
+  require('ACTION/msg').default
+) 
 export default class MsgDetail extends Component {
 /**
  * 有关 Context 的用法请看文档：https://facebook.github.io/react/docs/context.html

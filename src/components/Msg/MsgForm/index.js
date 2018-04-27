@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import msgService from 'SERVICE/msgService';
 import handleChange from 'MIXIN/handleChange';
 import tpl from './msg-form.jsx'; // 分拆写 JSX 模板以减少单文件代码量
-
+import {connect} from 'react-redux'
 /* 为什么不直接 const initState = { ... } 而是用函数返回呢？
    皆因直接传 initState 仅是传引用，initState 本身可被修改 */
 const getInitState = () => ({ id: '', title: '', content: '' });
@@ -11,7 +11,10 @@ const getInitState = () => ({ id: '', title: '', content: '' });
 /* 由于本组件由 /msg/add 与 /msg/:msgId 所公用
    因此需要判断当前是“新增模式”还是“修改模式” */
 const isAddMode = pathname => pathname.startsWith('/msg/add');
-
+@connect(
+  ({ userData, msg }) => ({ userData, msg }), // mapStateToProps
+  require('ACTION/msg').default
+) 
 export default class MsgForm extends Component {
   static contextTypes = {
     router: PropTypes.object.isRequired,

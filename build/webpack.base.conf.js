@@ -20,21 +20,23 @@ module.exports = {
     // ================================
     // 框架 / 类库 分离打包
     // ================================
-    vendor: [
-      'history',
-      'lodash',
-      'react',
-      'react-dom',
-      'react-redux',
-      'react-router',
-      'react-router-redux',
-      'redux',
-      'redux-thunk',
-    ],
+    // vendor: [
+    //   'history',
+    //   'lodash',
+    //   'react',
+    //   'react-dom',
+    //   'react-redux',
+    //   'react-router',
+    //   'react-router-redux',
+    //   'redux',
+    //   'redux-thunk',
+    // ],
   },
   output: {
     path: path.join(commonPath.dist, 'static'),
+    // filename: '[name].bundle.js',
     publicPath: '/static/',
+    // chunkFilename: '[name].bundle.js',
   },
   resolve: {
     extensions: ['*', '.js', '.jsx'],
@@ -62,30 +64,51 @@ module.exports = {
     rules: [
       {
         test: /\.(js|jsx)$/,
-        loaders: (function() {
-          var _loaders = [
-            'babel-loader?' +
-              JSON.stringify({
-                cacheDirectory: true,
-                plugins: ['transform-runtime', 'transform-decorators-legacy'],
-                presets: ['es2015', 'react', 'stage-0'],
-                env: {
-                  production: {
-                    presets: ['react-optimize'],
-                  },
-                },
-              }),
-            // 'eslint',
-          ];
+        loader: 'babel-loader',
+        // loaders: (function() {
+        // var _loaders = [
+        //   'babel-loader?' +
+        //     JSON.stringify({
+        //       cacheDirectory: true,
+        //       plugins: ['transform-runtime', 'transform-decorators-legacy'],
+        //       presets: ['es2015', 'react', 'stage-0'],
+        //       env: {
+        //         production: {
+        //           presets: ['react-optimize'],
+        //         },
+        //       },
+        //     }),
+        //   // 'eslint',
+        // ];
 
-          // 开发环境下引入 React Hot Loader
-          if (env === 'development') {
-            // _loaders.unshift('react-hot');
-          }
-          return _loaders;
-        })(),
+        // // 开发环境下引入 React Hot Loader
+        // if (env === 'development') {
+        //   // _loaders.unshift('react-hot');
+        // }
+        // return _loaders;
+        // })(),
         include: src,
         exclude: /node_modules/,
+      },
+      {
+        test: /\.css$/,
+        use: [{ loader: 'style-loader' }, { loader: 'css-loader' }],
+      },
+      {
+        test: /\.less$/,
+        use: [
+          { loader: 'style-loader' },
+          { loader: 'css-loader' },
+          { loader: 'less-loader' },
+        ],
+      },
+      {
+        test: /\.scss$/,
+        use: [
+          { loader: 'style-loader' },
+          { loader: 'css-loader' },
+          { loader: 'sass-loader' },
+        ],
       },
       // {
       //   test: /\.json$/,

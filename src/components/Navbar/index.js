@@ -59,6 +59,11 @@ export default class Navbar extends Component {
                     待办事项(新功能)
                   </Link>
                 </li>
+                <li className={pathname.startsWith('/antd') && 'active'}>
+                  <Link to='/antd'>
+                    AntDesign
+                  </Link>
+                </li>
               </ul>
               { userData ?
                 <LogoutDropdown userData={userData} logout={logout} /> :
