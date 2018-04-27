@@ -50,30 +50,30 @@ config.module.rules.push(
 );
 
 // webpack4 new attribute
-// config.optimization = {
-//   minimize: true,
-//   runtimeChunk: 'single',
-//   splitChunks: {
-//       chunks: "all",
-//       minSize: 200 * 1024, // 200K 
-//       minChunks: 2,
-//       maxAsyncRequests: 5,
-//       maxInitialRequests: 3,
-//       name: true,
-//       cacheGroups: {
-//           default: {
-//               minChunks: 1,
-//               priority: -20,
-//               reuseExistingChunk: true,
-//           },
-//           vendors: {
-//               name: "vendors",
-//               test: /[\\/]node_modules[\\/]/,
-//               priority: -10
-//           }
-//       }
-//   }
-// }
+config.optimization = {
+  minimize: true,
+  runtimeChunk: 'single',
+  splitChunks: {
+      chunks: "all",
+      minSize: 200 * 1024, // 200K 
+      minChunks: 2,
+      maxAsyncRequests: 5,
+      maxInitialRequests: 3,
+      name: true,
+      cacheGroups: {
+          default: {
+              minChunks: 1,
+              priority: -20,
+              reuseExistingChunk: true,
+          },
+          vendors: {
+              name: "vendors",
+              test: /[\\/]node_modules[\\/]/,
+              priority: -10
+          }
+      }
+  }
+}
 
 config.plugins.push(
   new CleanWebpackPlugin('dist', {
