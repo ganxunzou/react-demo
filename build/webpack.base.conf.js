@@ -1,16 +1,22 @@
 var path = require('path'),
-  webpack = require('webpack');
+  webpack = require('webpack'),
+  os = require('os'),
+  HappyPack = require('happypack');
 // NyanProgressPlugin = require('nyan-progress-webpack-plugin');
 
 var rootPath = path.resolve(__dirname, '..'), // 项目根目录
   src = path.join(rootPath, 'src'), // 开发源码目录
   env = process.env.NODE_ENV.trim(); // 当前环境
+
 var commonPath = {
   rootPath: rootPath,
   dist: path.join(rootPath, 'dist'), // build 后输出目录
   indexHTML: path.join(src, 'index.html'), // 入口基页
   staticDir: path.join(rootPath, 'static'), // 无需处理的静态资源目录
 };
+
+var happyThreadPool = HappyPack.ThreadPool({ size: os.cpus().length });
+console.log(happyThreadPool);
 
 module.exports = {
   // commonPath: commonPath,
@@ -39,6 +45,7 @@ module.exports = {
     // chunkFilename: '[name].bundle.js',
   },
   resolve: {
+    modules: [src, 'node_modules'],
     extensions: ['*', '.js', '.jsx'],
     alias: {
       // ================================
@@ -64,51 +71,9 @@ module.exports = {
     rules: [
       {
         test: /\.(js|jsx)$/,
-        loader: 'babel-loader',
-        // loaders: (function() {
-        // var _loaders = [
-        //   'babel-loader?' +
-        //     JSON.stringify({
-        //       cacheDirectory: true,
-        //       plugins: ['transform-runtime', 'transform-decorators-legacy'],
-        //       presets: ['es2015', 'react', 'stage-0'],
-        //       env: {
-        //         production: {
-        //           presets: ['react-optimize'],
-        //         },
-        //       },
-        //     }),
-        //   // 'eslint',
-        // ];
-
-        // // 开发环境下引入 React Hot Loader
-        // if (env === 'development') {
-        //   // _loaders.unshift('react-hot');
-        // }
-        // return _loaders;
-        // })(),
+        loader: 'babel-loader?cacheDirectory=true',
         include: src,
         exclude: /node_modules/,
-      },
-      {
-        test: /\.css$/,
-        use: [{ loader: 'style-loader' }, { loader: 'css-loader' }],
-      },
-      {
-        test: /\.less$/,
-        use: [
-          { loader: 'style-loader' },
-          { loader: 'css-loader' },
-          { loader: 'less-loader' },
-        ],
-      },
-      {
-        test: /\.scss$/,
-        use: [
-          { loader: 'style-loader' },
-          { loader: 'css-loader' },
-          { loader: 'sass-loader' },
-        ],
       },
       // {
       //   test: /\.json$/,

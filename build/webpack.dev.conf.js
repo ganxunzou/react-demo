@@ -23,17 +23,39 @@ config.entry.app = [
 config.output.publicPath = '/';
 
 // 开发环境 eslint 缓存提高开发效率
-config.module.rules.push({
-  enforce: 'pre',
-  test: /\.(js|jsx)$/,
-  exclude: /node_modules/,
-  loader: 'eslint-loader',
-  options: {
-    fix: true,
-    cache: true,
-    formatter: require('eslint-friendly-formatter'),
+config.module.rules.push(
+  {
+    enforce: 'pre',
+    test: /\.(js|jsx)$/,
+    exclude: /node_modules/,
+    loader: 'eslint-loader',
+    options: {
+      fix: true,
+      cache: true,
+      formatter: require('eslint-friendly-formatter'),
+    },
   },
-});
+  {
+    test: /\.css$/,
+    use: [{ loader: 'style-loader' }, { loader: 'css-loader' }],
+  },
+  {
+    test: /\.less$/,
+    use: [
+      { loader: 'style-loader' },
+      { loader: 'css-loader' },
+      { loader: 'less-loader' },
+    ],
+  },
+  {
+    test: /\.scss$/,
+    use: [
+      { loader: 'style-loader' },
+      { loader: 'css-loader' },
+      { loader: 'sass-loader' },
+    ],
+  },
+);
 
 config.plugins.push(
   new webpack.optimize.OccurrenceOrderPlugin(),
