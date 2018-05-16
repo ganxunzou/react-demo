@@ -71,10 +71,11 @@ module.exports = {
     rules: [
       {
         test: /\.(js|jsx)$/,
-        loader: 'babel-loader?cacheDirectory=true',
+        use: 'happypack/loader?id=babel',
         include: src,
         exclude: /node_modules/,
       },
+
       // {
       //   test: /\.json$/,
       //   loader: 'json-loader',
@@ -114,6 +115,22 @@ module.exports = {
       __PROD__: env === 'production',
       __COMPONENT_DEVTOOLS__: false, // 是否使用组件形式的 Redux DevTools
       __WHY_DID_YOU_UPDATE__: false, // 是否检测不必要的组件重渲染
+    }),
+    new HappyPack({
+      id: 'babel', // 上面loader?后面指定的id
+      loaders: ['babel-loader?cacheDirectory'], // 实际匹配处理的loader
+      // 如何处理.js文件，和rules里的配置相同
+      threadPool: happyThreadPool,
+      // cache: true // 已被弃用
+      verbose: true,
+      // loaders: [{
+      //     loader: 'babel-loader',
+      //     query: {
+      //         presets: [
+      //             "env", "stage-0"
+      //         ]
+      //     }
+      // }]
     }),
   ],
 };
